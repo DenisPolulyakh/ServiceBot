@@ -1,0 +1,14 @@
+<div class="nav">
+  <div class="container">
+    <a [routerLink]="['list']" [routerLinkActive]="['active']">Список</a>
+    <a [routerLink]="['import']" [routerLinkActive]="['active']">Импорт</a>
+  </div>
+</div>
+<div class="sub-menu" *ngIf="this.router.url==='/deal-list' || this.router.url==='/archive-deal'">
+  <div class="container">
+    <span>
+      <a [routerLink]="['import']" [routerLinkActive]="['active']">Импорт файла</a>
+      <a [routerLink]="['archive-deal']" [routerLinkActive]="['active']">Список</a>
+    </span>
+  </div>
+</div>

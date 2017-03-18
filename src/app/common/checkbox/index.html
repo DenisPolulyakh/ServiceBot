@@ -1,0 +1,11 @@
+<label class="checkbox">
+  <input
+    type="checkbox"
+    (change)="_change()"
+    name="name"
+    [attr.id]="id"
+  />
+
+  <span class="outer"><span class="inner"></span></span>
+  <ng-content></ng-content>
+</label>
