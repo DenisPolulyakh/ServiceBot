@@ -131,14 +131,6 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-
       <!-- For Maven Tomcat Plugin -->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
@@ -147,7 +139,7 @@
         <configuration>
           <url>http://localhost:9999/manager/text</url>
           <server>TomcatServer</server>
-          <path>/NeznaykaConfig</path>
+          <path>/FrankBotMind</path>
           <username>tomcat</username>
           <password>tomcat</password>
         </configuration>
@@ -155,8 +147,6 @@
 
         </executions>
       </plugin>
-
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -178,7 +168,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
 </project>
