@@ -5,7 +5,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "noEmitHelpers": true
+    "noEmitHelpers": true,
+    "lib": ["es2015", "dom"]
   },
   "compileOnSave": false,
   "buildOnSave": false,
@@ -14,7 +15,8 @@
     "useWebpackText": true
   },
   "exclude": [
-
+    "typings/browser.d.ts",
+    "typings/browser",
     "node_modules"
   ]
 }

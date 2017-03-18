@@ -70,5 +70,56 @@
   ul {
     margin: 0;
   }
+  .action-header {
+    display: flex;
+    form{
+      margin-right: 5px;
+    }
+  }
 }
 
+$iconColor: #fff;
+$color: #8FC357;
+.search {
+  width: 100%;
+  position: relative;
+  &:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-family: 'FontAwesome';
+    content: '\f002';
+    background: $color;
+    text-align: center;
+    color: $iconColor;
+    border-radius: 5px;
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-smooth: always;
+  }
+}
+
+.searchTerm {
+  width: 100%;
+  border: 5px solid $color;
+  padding: 5px;
+  height: 40px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.searchButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.block{
+  margin-top: 5px;
+}

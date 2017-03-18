@@ -21,7 +21,7 @@ export class DictionaryListComponent implements OnInit {
 
   public currentPage:number = 1;
   public totalItems:number = 0; // total numbar of page not items
-  public maxSize:number = 100; // max page size
+  public maxSize:number = 2; // max page size
 
   public options = {
     timeOut: 5000,
@@ -85,6 +85,10 @@ export class DictionaryListComponent implements OnInit {
   }
 
   edit(item:DictionaryList) {
+    let sthEditIndex = _.indexOf(this.dictionaryList, _.find(this.dictionaryList, {'_isEdit': true}))
+    if (sthEditIndex >= 0 && item.getId() != this.dictionaryList[sthEditIndex].getId()) {
+      this.save(this.dictionaryList[sthEditIndex])
+    }
     if (item.getIsEdit()) return null;
     this.itemSnapshot[item.getId()] = _.cloneDeep(item);
     item.setIsEdit(true)
@@ -132,7 +136,7 @@ export class DictionaryListComponent implements OnInit {
         res => {
           item.setIsEdit(false);
           _.remove(this.dictionaryList, i => (
-            i._id == item.getId
+            i._id == item.getId()
           ))
         },
         err => {

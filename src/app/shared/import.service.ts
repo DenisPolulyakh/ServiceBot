@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, RequestOptions, RequestOptionsArgs, URLSearchParams, Headers} from '@angular/http';
-import {API_URL, API_MOCK} from '../config';
+import {API_URL} from '../config';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';

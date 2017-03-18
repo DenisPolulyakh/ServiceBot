@@ -1,7 +1,7 @@
 <h1>{{title}}</h1>
 
 <div class="headTitle">
-  <ul>
+  <ul class="col-sm-6 no-padding">
     <pagination-controls
       (pageChange)="pageChanged($event)"
       previousLabel=""
@@ -9,7 +9,11 @@
     >
     </pagination-controls>
   </ul>
-  <div>
+  <div class="col-sm-6 action-header no-padding">
+    <form class="search">
+      <input class="searchTerm" type="text" placeholder="Поиск...">
+      <input type="button" class="searchButton">
+    </form>
     <button class="btn btn-sm btn-primary" (click)="add(item)">
       <i class="fa fa-plus"></i> Добавить
     </button>
@@ -18,11 +22,6 @@
   <span *ngIf="totalDeals">
     Общее количество: <b>{{totalDeals}}</b>
 </span>
-
-</div>
-
-
-<div class="pull-right">
 
 </div>
 
