@@ -143,6 +143,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     }
 
     @Override
+    @Transactional
     public List<Message> listMessage() {
         List<Message> answersList = (List<Message>) sessionFactory.getCurrentSession()
                 .createCriteria(Message.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
