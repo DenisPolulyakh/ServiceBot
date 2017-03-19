@@ -19,7 +19,6 @@ public class Message {
     private String value;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TAG_ID",nullable=false)
     @Column(name = "TAG")
     private List<Tag> tags;
 
