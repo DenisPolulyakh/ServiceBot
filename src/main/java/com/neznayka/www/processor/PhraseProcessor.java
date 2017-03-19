@@ -28,6 +28,7 @@ public class PhraseProcessor {
             List<Tag> tagList = m.getTags();
             int k = 0;
             for(Tag t:tagList){
+                log.info(CLASS_NAME + " " + METHOD_NAME + "TAG WORD " + t.getTag());
                 if(text.contains(t.getTag().toLowerCase())){k++;}
             }
             if(k/tagList.size()*100>80){
