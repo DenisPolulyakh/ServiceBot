@@ -111,6 +111,11 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
+     <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>NeznaykaConfig</finalName>
@@ -133,7 +138,6 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
-
       <!-- For Maven Tomcat Plugin -->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
@@ -142,7 +146,7 @@
         <configuration>
           <url>http://localhost:9999/manager/text</url>
           <server>TomcatServer</server>
-          <path>/NeznaykaConfig</path>
+          <path>/FrankBotMind</path>
           <username>tomcat</username>
           <password>tomcat</password>
         </configuration>
