@@ -84,13 +84,15 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         Message message =  (Message)query.list().get(0);
         message.setValue(dictionaryMap.getMessage());
         List<Tag> tags = message.getTags();
+        List<Tag> tagsNew = new ArrayList<Tag>();
         List<String> tagsStrList = dictionaryMap.getTags();
         int i=0;
         for(Tag t:tags){
             t.setTag(tagsStrList.get(i));
             i++;
+            tagsNew.add(t);
         }
-        message.setTags(tags);
+        message.setTags(tagsNew);
         sessionFactory.getCurrentSession().update(message);
         hql ="from Message m where m.id=:id";
         query = sessionFactory.getCurrentSession().createQuery(hql);
