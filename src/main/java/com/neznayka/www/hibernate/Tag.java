@@ -21,9 +21,9 @@ public class Tag {
     @Column(name = "TAG", nullable = false)
     private String tag;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+   /* @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "MESSAGE_ID", updatable = false, insertable = false, nullable=false)
-    private Message messageId;
+    private Message message;*/
 
 
     public int getId() {
@@ -42,11 +42,11 @@ public class Tag {
         this.tag = tag;
     }
 
-    public Message getMessageId() {
-        return messageId;
+   /* public Message getMessageId() {
+        return message;
     }
 
-    public void setMessageId(Message messageId) {
-        this.messageId = messageId;
-    }
+    public void setMessageId(Message message) {
+        this.message = message;
+    }*/
 }
