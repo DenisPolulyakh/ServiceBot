@@ -22,13 +22,13 @@ public class PhraseProcessor {
         String text = BotUtilMethods.getPropertyFromJSON(message,"text");
         log.info(CLASS_NAME + " " + METHOD_NAME + " question: " + text);
         text =  BotUtilMethods.replaseSymbols(text);
-
+        text = text.toLowerCase();
         List<Message> listMessage = configDAO.listMessage();
         for(Message m:listMessage){
             List<Tag> tagList = m.getTags();
             int k = 0;
             for(Tag t:tagList){
-                if(text.contains(t.getTag())){k++;}
+                if(text.contains(t.getTag().toLowerCase())){k++;}
             }
             if(k/tagList.size()*100>80){
                 return m.getValue();
