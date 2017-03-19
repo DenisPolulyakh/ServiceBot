@@ -28,12 +28,19 @@ public class PhraseProcessor {
             List<Tag> tagList = m.getTags();
             int k = 0;
             for(Tag t:tagList){
-                log.info(CLASS_NAME + " " + METHOD_NAME + "TAG WORD " + t.getTag());
-                if(text.contains(t.getTag().toLowerCase())){k++;}
+                String[] split = t.getTag().split(" ");
+                log.info(CLASS_NAME + " " + METHOD_NAME + " TAG WORD " + split);
+                for(String str: split) {
+                    if (text.contains(str.toLowerCase())) {
+                        k++;
+                    }
+                }
+                log.info(CLASS_NAME + " " + METHOD_NAME + " К " + k);
+                if(k/split.length*100>80){
+                    return m.getValue();
+                }
             }
-            if(k/tagList.size()*100>80){
-                return m.getValue();
-            }
+
 
         }
 
