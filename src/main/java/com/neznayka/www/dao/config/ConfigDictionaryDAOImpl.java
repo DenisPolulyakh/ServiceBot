@@ -91,9 +91,11 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
             t.setTag(tagsStrList.get(i));
             i++;
             tagsNew.add(t);
+            sessionFactory.getCurrentSession().save(t);
+
         }
         message.setTags(tagsNew);
-        sessionFactory.getCurrentSession().persist(message);
+        sessionFactory.getCurrentSession().save(message);
         hql ="from Message m where m.id=:id";
         query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setInteger("id", id);
