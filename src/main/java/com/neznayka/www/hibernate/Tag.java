@@ -14,12 +14,16 @@ import java.util.List;
 @Table(name="TAGS")
 public class Tag {
     @Id
-    @Column(name = "ID",unique = true, nullable = false)
+    @Column(name = "TAG_ID",unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "TAG", nullable = false)
     private String tag;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "MESSAGE_ID", updatable = false, insertable = false, nullable=false)
+    private Message messageId;
 
 
     public int getId() {
@@ -38,5 +42,11 @@ public class Tag {
         this.tag = tag;
     }
 
+    public Message getMessageId() {
+        return messageId;
+    }
 
+    public void setMessageId(Message messageId) {
+        this.messageId = messageId;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name="MESSAGE")
 public class Message {
     @Id
-    @Column(name = "ID")
+    @Column(name = "MESSAGE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -19,6 +19,7 @@ public class Message {
     private String value;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "TAG_ID",nullable=false)
     @Column(name = "TAG")
     private List<Tag> tags;
 
