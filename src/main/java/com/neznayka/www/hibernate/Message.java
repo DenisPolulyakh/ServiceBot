@@ -18,7 +18,7 @@ public class Message {
     @Column(name = "VALUE")
     private String value;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @Column(name = "TAG")
     private List<Tag> tags;
 

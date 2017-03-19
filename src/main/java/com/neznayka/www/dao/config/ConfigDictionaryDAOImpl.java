@@ -90,7 +90,6 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         for(Tag t:tags){
             t.setTag(tagsStrList.get(i));
             i++;
-            sessionFactory.getCurrentSession().update(t);
             tagsNew.add(t);
         }
         message.setTags(tagsNew);
