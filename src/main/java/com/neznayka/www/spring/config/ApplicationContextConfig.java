@@ -58,7 +58,6 @@ public class ApplicationContextConfig {
 
         return basicDataSource;
 
-
     }
     @Bean(name = "ConfigDAOStub")
     public ConfigDAO getConfigDAO() {

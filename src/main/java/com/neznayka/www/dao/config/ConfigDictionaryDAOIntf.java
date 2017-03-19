@@ -13,7 +13,7 @@ public interface ConfigDictionaryDAOIntf {
 
     DictionaryData create(DictionaryMap dictionaryMap);
     Integer delete(int id);
-    boolean update(DictionaryMap dictionaryMap);
+    DictionaryData update(DictionaryMap dictionaryMap);
     List<DictionaryData> list(int offset, int records);
     Long getTotal();
 }

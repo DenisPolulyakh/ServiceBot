@@ -146,7 +146,7 @@
         <configuration>
           <url>http://localhost:9999/manager/text</url>
           <server>TomcatServer</server>
-          <path>/FrankBotMind</path>
+          <path>/NeznaykaConfig</path>
           <username>tomcat</username>
           <password>tomcat</password>
         </configuration>

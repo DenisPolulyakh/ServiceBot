@@ -74,8 +74,37 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     }
 
     @Override
-    public boolean update(DictionaryMap dictionaryMap) {
-       return true;
+    @Transactional
+    public DictionaryData update(DictionaryMap dictionaryMap) {
+        DictionaryData responseInsert = null;
+        Integer id = dictionaryMap.getId();
+        String hql ="from Message m where m.id=:id";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setInteger("id", id);
+        Message message =  (Message)query.list().get(0);
+        message.setValue(dictionaryMap.getMessage());
+        List<Tag> tags = message.getTags();
+        List<String> tagsStrList = dictionaryMap.getTags();
+        int i=0;
+        for(Tag t:tags){
+            t.setTag(tagsStrList.get(i));
+            i++;
+        }
+        message.setTags(tags);
+        sessionFactory.getCurrentSession().saveOrUpdate(message);
+        hql ="from Message m where m.id=:id";
+        query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setInteger("id", id);
+        message = (Message) query.list().get(0);
+        responseInsert = new DictionaryData();
+        responseInsert.setMessage(message.getValue());
+        responseInsert.setId(message.getId());
+        List<String> tagsList= new ArrayList<String>();
+        for(Tag tag:message.getTags()){
+            tagsList.add(tag.getTag());
+        }
+        responseInsert.setTags(tagsList);
+        return responseInsert;
     }
 
     @Override

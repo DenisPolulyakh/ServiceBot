@@ -56,12 +56,13 @@ public class NeznaykaConfigDictionaryController {
     @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<ResponseCRUD> update(@RequestBody DictionaryMap dictionaryMap) {
-        HttpHeaders headers = new HttpHeaders();
-        if( configDAOstub.update(dictionaryMap)) {
-            ResponseCRUD responseCRUD = new ResponseCRUD("success", "",null, 159);
-            return new ResponseEntity<ResponseCRUD>(responseCRUD, HttpStatus.OK);
+        DictionaryData responseDictionaryData = configDAO.update(dictionaryMap);
+        log.info("UPDATE");
+        if(responseDictionaryData!=null) {
+            ResponseCRUD responseCRUD = new ResponseCRUD("success",responseDictionaryData.getMessage(), responseDictionaryData.getTags(), responseDictionaryData.getId());
+            return new ResponseEntity<ResponseCRUD>(responseCRUD,HttpStatus.OK);
         }else{
-            ResponseCRUD responseCRUD = new ResponseCRUD("error", "",null, 159);
+            ResponseCRUD responseCRUD = new ResponseCRUD("error",null,null, 159);
             return new ResponseEntity<ResponseCRUD>(responseCRUD,HttpStatus.BAD_REQUEST);
         }
     }
