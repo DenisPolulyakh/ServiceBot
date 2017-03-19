@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
-;import java.util.List;
+;import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.List;
 
 
 /**
@@ -98,8 +100,9 @@ public class NeznaykaConfigDictionaryController {
 
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public Message search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) {
-        log.info(" question: " + text);
+    public Message search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
+        text = URLDecoder.decode(text, "UTF-8");
+        log.info("After decode: " + text);
         Message message = new Message();
         PhraseProcessor phraseProcessor = new PhraseProcessor();
         phraseProcessor.setConfigDAO(configDAO);

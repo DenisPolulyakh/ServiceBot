@@ -30,6 +30,9 @@ public class PhraseProcessor {
             for(Tag t:tagList){
                 if(text.contains(t.getTag())){k++;}
             }
+            if(k/tagList.size()*100>80){
+                return m.getValue();
+            }
 
         }
 
