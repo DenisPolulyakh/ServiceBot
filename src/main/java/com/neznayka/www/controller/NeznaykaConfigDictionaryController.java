@@ -4,6 +4,7 @@ package com.neznayka.www.controller;
 import com.neznayka.www.dao.config.ConfigDAO;
 import com.neznayka.www.dao.config.ConfigDictionaryDAOIntf;
 import com.neznayka.www.model.*;
+import com.neznayka.www.processor.PhraseProcessor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -93,5 +94,16 @@ public class NeznaykaConfigDictionaryController {
 
         ResponseData responseData = new ResponseData("success",offset, records,(configDAO.getTotal()).toString() , dictionaryData);
         return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public Message search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) {
+        log.info(" question: " + text);
+        Message message = new Message();
+        PhraseProcessor phraseProcessor = new PhraseProcessor();
+        phraseProcessor.setConfigDAO(configDAO);
+        message.addPhrase(phraseProcessor.getMessageToAnswer(text));
+        return message;
     }
 }

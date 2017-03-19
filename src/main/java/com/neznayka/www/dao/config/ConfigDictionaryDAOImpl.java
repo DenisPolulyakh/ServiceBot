@@ -143,6 +143,13 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     }
 
     @Override
+    public List<Message> listMessage() {
+        List<Message> answersList = (List<Message>) sessionFactory.getCurrentSession()
+                .createCriteria(Message.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        return answersList;
+    }
+
+    @Override
     @Transactional
     public Long getTotal() {
         String hql ="select count(*) from Message";
