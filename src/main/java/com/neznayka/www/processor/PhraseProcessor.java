@@ -45,7 +45,7 @@ public class PhraseProcessor {
         }
 
 
-        return "Простите я Вас, не понял :)";
+        return "Не знаю :)";
     }
 
 
