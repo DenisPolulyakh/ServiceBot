@@ -31,12 +31,12 @@ public class PhraseProcessor {
                 String[] split = t.getTag().split(" ");
                 log.info(CLASS_NAME + " " + METHOD_NAME + " TAG WORD " + split);
                 for(String str: split) {
-                    if (text.contains(str.toLowerCase())) {
+                    if (text.equals(str.toLowerCase())) {
                         k++;
                     }
                 }
                 log.info(CLASS_NAME + " " + METHOD_NAME + " К " + k);
-                if(k/split.length*100>99){
+                if(k/split.length*100>80){
                     return m.getValue();
                 }
             }
