@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name="TAGS")
 public class Tag {
     @Id
-    @Column(name = "TAG_ID", nullable = false)
+    @Column(name = "TAG_ID",unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
