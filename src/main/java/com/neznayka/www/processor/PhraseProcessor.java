@@ -31,7 +31,8 @@ public class PhraseProcessor {
                 String[] split = t.getTag().split(" ");
                 log.info(CLASS_NAME + " " + METHOD_NAME + " TAG WORD " + split);
                 for(String str: split) {
-                    if (text.equals(str.toLowerCase())) {
+                    log.info(CLASS_NAME + " " + METHOD_NAME + str);
+                    if (text.contains(str.toLowerCase())) {
                         k++;
                     }
                 }
