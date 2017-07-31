@@ -46,7 +46,7 @@ public class NeznaykaConfigDictionaryController {
         DictionaryData responseDictionaryData = configDAO.create(dictionaryMap);
         if(responseDictionaryData!=null) {
             ResponseCRUD responseCRUD = new ResponseCRUD("success",responseDictionaryData.getMessage(), responseDictionaryData.getTags(), responseDictionaryData.getId());
-            return new ResponseEntity<ResponseCRUD>(responseCRUD,HttpStatus.OK);
+            return new ResponseEntity<ResponseCRUD>(responseCRUD,headers,HttpStatus.OK);
         }else{
             ResponseCRUD responseCRUD = new ResponseCRUD("error",null,null, 159);
             return new ResponseEntity<ResponseCRUD>(responseCRUD,headers,HttpStatus.BAD_REQUEST);
