@@ -41,7 +41,7 @@ public class NeznaykaConfigDictionaryController {
     @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Cmessage_tagsontent-Type","Accept"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<ResponseCRUD> create(@RequestBody DictionaryMap dictionaryMap) {
-
+        log.info("CREATE");
         HttpHeaders headers = new HttpHeaders();
         DictionaryData responseDictionaryData = configDAO.create(dictionaryMap);
         if(responseDictionaryData!=null) {
