@@ -1,7 +1,9 @@
 package com.neznayka.www.hibernate;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Polulyakh Denis
@@ -18,10 +20,10 @@ public class Message {
     @Column(name = "VALUE")
     private String value;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @Column(name = "TAG")
-    private List<Tag> tags;
 
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "message")
+    private Set<Tag> tags = new HashSet<Tag>();
 
     public Message() {
     }
@@ -34,11 +36,12 @@ public class Message {
         this.id = id;
     }
 
-    public List<Tag> getTags() {
+
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 

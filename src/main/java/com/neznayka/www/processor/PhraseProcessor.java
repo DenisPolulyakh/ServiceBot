@@ -6,6 +6,7 @@ import com.neznayka.www.hibernate.Tag;
 import com.neznayka.www.utils.BotUtilMethods;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -25,7 +26,7 @@ public class PhraseProcessor {
         text = text.toLowerCase();
         List<Message> listMessage = configDAO.listMessage();
         for(Message m:listMessage){
-            List<Tag> tagList = m.getTags();
+            Set<Tag> tagList = m.getTags();
             int k = 0;
             for(Tag t:tagList){
                 String[] split = t.getTag().split(" ");

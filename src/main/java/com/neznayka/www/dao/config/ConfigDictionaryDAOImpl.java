@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Repository
@@ -34,7 +36,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     public DictionaryData create(DictionaryMap dictionaryMap) {
 
        DictionaryData responseInsert = null;
-       List<Tag> tags = new ArrayList<Tag>();
+       Set<Tag> tags = new HashSet<Tag>();
        for(String tagstr:dictionaryMap.getTags()){
            Tag tag = new Tag();
            tag.setTag(tagstr);
@@ -83,8 +85,8 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         query.setInteger("id", id);
         Message message =  (Message)query.list().get(0);
         message.setValue(dictionaryMap.getMessage());
-        List<Tag> tags = message.getTags();
-        List<Tag> tagsNew = new ArrayList<Tag>();
+        Set<Tag> tags = message.getTags();
+        Set<Tag> tagsNew = new HashSet<Tag>();
         List<String> tagsStrList = dictionaryMap.getTags();
         int i=0;
         for(Tag t:tags){

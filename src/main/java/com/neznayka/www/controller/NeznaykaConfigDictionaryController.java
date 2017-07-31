@@ -38,7 +38,7 @@ public class NeznaykaConfigDictionaryController {
     @Qualifier("ConfigDAOStub")
     ConfigDAO configDAOstub;
 
-    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
+    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Cmessage_tagsontent-Type","Accept"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<ResponseCRUD> create(@RequestBody DictionaryMap dictionaryMap) {
 

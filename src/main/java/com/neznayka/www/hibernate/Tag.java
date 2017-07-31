@@ -4,7 +4,9 @@ package com.neznayka.www.hibernate;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Polulyakh Denis
@@ -14,16 +16,20 @@ import java.util.List;
 @Table(name="TAGS")
 public class Tag {
     @Id
-    @Column(name = "TAG_ID",unique = true, nullable = false)
+    @Column(name = "TAG_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "TAG", nullable = false)
     private String tag;
 
-   /* @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "MESSAGE_ID", updatable = false, insertable = false, nullable=false)
-    private Message message;*/
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "message_tags",  joinColumns = {
+            @JoinColumn(name = "TAG_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID",
+                    nullable = false, updatable = false) })
+
+   private Set<Message> message = new HashSet<Message>();
 
 
     public int getId() {
@@ -42,11 +48,11 @@ public class Tag {
         this.tag = tag;
     }
 
-   /* public Message getMessageId() {
+    public Set<Message> getMessage() {
         return message;
     }
 
-    public void setMessageId(Message message) {
+    public void setMessage(Set<Message> message) {
         this.message = message;
-    }*/
+    }
 }
