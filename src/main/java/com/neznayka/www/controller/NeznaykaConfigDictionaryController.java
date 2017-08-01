@@ -84,7 +84,7 @@ public class NeznaykaConfigDictionaryController {
 
     @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<CRUDRequestResponse> list(@RequestParam(value = "offset", required = false, defaultValue = "1") Integer offset,@RequestParam(value = "records", required = false, defaultValue = "1") Integer records) {
+    public ResponseEntity<CRUDRequestResponse> list(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,@RequestParam(value = "records", required = false, defaultValue = "1") Integer records) {
         CRUDRequestResponse crudRequestResponse = null;
         try {
 
