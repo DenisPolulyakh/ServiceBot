@@ -23,12 +23,8 @@ public class Tag {
     @Column(name = "TAG", nullable = false)
     private String tag;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "message_tags",  joinColumns = {
-            @JoinColumn(name = "TAG_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID",
-                    nullable = false, updatable = false) })
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tag")
    private Set<Message> message = new HashSet<Message>();
 
 

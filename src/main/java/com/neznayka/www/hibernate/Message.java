@@ -22,7 +22,13 @@ public class Message {
 
 
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "message")
+
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "message_tags",  joinColumns = {
+            @JoinColumn(name = "MESSAGE_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "TAG_ID",
+                    nullable = false, updatable = false) })
     private Set<Tag> tags = new HashSet<Tag>();
 
     public Message() {
