@@ -6,9 +6,7 @@ import com.neznayka.www.hibernate.Tag;
 import com.neznayka.www.model.DictionaryData;
 import com.neznayka.www.model.DictionaryMap;
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,15 +47,21 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         message.setTags(tags);
 
 
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx=session.beginTransaction();
+        Message checkMessage = (Message)sessionFactory.getCurrentSession().load(Message.class,message.getId());
+        if(checkMessage!=null){
+            message = checkMessage;
+        }
 
-
-        sessionFactory.getCurrentSession().saveOrUpdate(message);
+        session.saveOrUpdate(message);
+        tx.commit();
         Integer id = message.getId();
         log.info("Id entry="+id);
-        String hql ="from Message m where m.id=:id";
+        /*String hql ="from Message m where m.id=:id";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setInteger("id", id);
-        message = (Message)sessionFactory.getCurrentSession().load(Message.class,id);
+        message =*/
         responseInsert = new DictionaryData();
         responseInsert.setMessage(message.getValue());
         responseInsert.setId(id);
