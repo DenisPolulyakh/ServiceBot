@@ -48,14 +48,17 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
 
 
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx=session.beginTransaction();
+
         Message checkMessage = (Message)sessionFactory.getCurrentSession().load(Message.class,message.getId());
         if(checkMessage!=null){
             message = checkMessage;
+            session.update(message);
+        }else{
+            session.save(message);
         }
 
-        session.saveOrUpdate(message);
-        tx.commit();
+
+
         Integer id = message.getId();
         log.info("Id entry="+id);
         /*String hql ="from Message m where m.id=:id";
