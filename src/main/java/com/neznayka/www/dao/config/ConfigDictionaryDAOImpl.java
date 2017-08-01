@@ -48,7 +48,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
 
 
 
-        sessionFactory.getCurrentSession().save(tags);
+        sessionFactory.getCurrentSession().save(message);
         Integer id = (Integer)sessionFactory.getCurrentSession().save(message);
         log.info("Id entry="+id);
         String hql ="from Message m where m.id=:id";
