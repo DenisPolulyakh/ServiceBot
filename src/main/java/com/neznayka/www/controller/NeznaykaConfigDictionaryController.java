@@ -38,67 +38,67 @@ public class NeznaykaConfigDictionaryController {
     @Qualifier("ConfigDAOStub")
     ConfigDAO configDAOstub;
 
-    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
+    @CrossOrigin(origins = "*", allowedHeaders = {"Origin", "X-Requested-With", "Content-Type", "Accept"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<ResponseCRUD> create(@RequestBody DictionaryMap dictionaryMap) {
+    public ResponseEntity<CRUDRequestResponse> create(@RequestBody CRUDRequestResponse crudRequestResponse) {
         log.info("CREATE");
-        HttpHeaders headers = new HttpHeaders();
-        DictionaryData responseDictionaryData = configDAO.create(dictionaryMap);
-        if(responseDictionaryData!=null) {
-            ResponseCRUD responseCRUD = new ResponseCRUD("success",responseDictionaryData.getMessage(), responseDictionaryData.getTags(), responseDictionaryData.getId());
-            return new ResponseEntity<ResponseCRUD>(responseCRUD,headers,HttpStatus.OK);
-        }else{
-            ResponseCRUD responseCRUD = new ResponseCRUD("error",null,null, 159);
-            return new ResponseEntity<ResponseCRUD>(responseCRUD,headers,HttpStatus.BAD_REQUEST);
+        try {
+            crudRequestResponse = configDAO.create(crudRequestResponse);
+            crudRequestResponse.setStatus("success");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            crudRequestResponse = new CRUDRequestResponse("error");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse,  HttpStatus.BAD_REQUEST);
         }
     }
 
 
-
-
-    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
+    @CrossOrigin(origins = "*", allowedHeaders = {"Origin", "X-Requested-With", "Content-Type", "Accept"})
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseCRUD> update(@RequestBody DictionaryMap dictionaryMap) {
-        DictionaryData responseDictionaryData = configDAO.update(dictionaryMap);
+    public ResponseEntity<CRUDRequestResponse> update(@RequestBody CRUDRequestResponse crudRequestResponse) {
         log.info("UPDATE");
-        if(responseDictionaryData!=null) {
-            ResponseCRUD responseCRUD = new ResponseCRUD("success",responseDictionaryData.getMessage(), responseDictionaryData.getTags(), responseDictionaryData.getId());
-            return new ResponseEntity<ResponseCRUD>(responseCRUD,HttpStatus.OK);
-        }else{
-            ResponseCRUD responseCRUD = new ResponseCRUD("error",null,null, 159);
-            return new ResponseEntity<ResponseCRUD>(responseCRUD,HttpStatus.BAD_REQUEST);
+        try {
+            crudRequestResponse = configDAO.update(crudRequestResponse);
+            crudRequestResponse.setStatus("success");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            crudRequestResponse = new CRUDRequestResponse("error");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.BAD_REQUEST);
         }
-    }
-    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResponseEntity<ResponseCRUD> delete(@RequestBody DeleteRequestData deleteRequestData) {
-        /*if(id.equals("")){ResponseCRUD responseCRUD = new ResponseCRUD("error", "",null, 159);
-            return new ResponseEntity<ResponseCRUD>(responseCRUD,HttpStatus.BAD_REQUEST);}*/
-       // configDAO.delete(Integer.parseInt(id));
-       // HttpHeaders headers = new HttpHeaders();
 
-        Integer idDelete = configDAO.delete(Integer.parseInt(deleteRequestData.getId()));
-        ResponseCRUD responseCRUD = new ResponseCRUD("success", "",null, idDelete);
-        return new ResponseEntity<ResponseCRUD>(responseCRUD, HttpStatus.OK);
-       /* }else{
-            ResponseCRUD responseCRUD = new ResponseCRUD("error", null,null, 159);
-            return new ResponseEntity<ResponseCRUD>(responseCRUD,HttpStatus.BAD_REQUEST);
-        }*/
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = {"Origin", "X-Requested-With", "Content-Type", "Accept"})
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<CRUDRequestResponse> delete(@RequestBody CRUDRequestResponse crudRequestResponse) {
+        log.info("DELETE");
+        try {
+            crudRequestResponse = configDAO.delete(crudRequestResponse);
+            crudRequestResponse.setStatus("success");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            crudRequestResponse = new CRUDRequestResponse("error");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<ResponseData> list(@RequestParam(value = "offset", required = false, defaultValue = "1") String offset,@RequestParam(value = "records", required = false, defaultValue = "1") String records) {
+    public ResponseEntity<CRUDRequestResponse> list(@RequestParam(value = "offset", required = false, defaultValue = "1") Integer offset,@RequestParam(value = "records", required = false, defaultValue = "1") Integer records) {
+        CRUDRequestResponse crudRequestResponse = null;
+        try {
 
-        HttpHeaders headers = new HttpHeaders();
-        List<DictionaryData> dictionaryData = configDAO.list(Integer.parseInt(offset),Integer.parseInt(records));
-        //List<DictionaryData> dictionaryData = configDAOstub.list(Integer.parseInt(offset),Integer.parseInt(records));
-
-        ResponseData responseData = new ResponseData("success",offset, records,(configDAO.getTotal()).toString() , dictionaryData);
-        return new ResponseEntity<ResponseData>(responseData, HttpStatus.OK);
+            crudRequestResponse = configDAO.list(offset, records);
+            crudRequestResponse.setStatus("success");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.OK);
+        }
+        catch(Exception e) {
+            crudRequestResponse = new CRUDRequestResponse("error");
+            return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
-
+/*
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public Message search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
         text = URLDecoder.decode(text, "UTF-8");
@@ -108,5 +108,5 @@ public class NeznaykaConfigDictionaryController {
         phraseProcessor.setConfigDAO(configDAO);
         message.addPhrase(phraseProcessor.getMessageToAnswer(text));
         return message;
-    }
+    }*/
 }

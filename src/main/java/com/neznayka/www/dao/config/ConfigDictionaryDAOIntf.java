@@ -1,6 +1,7 @@
 package com.neznayka.www.dao.config;
 
 import com.neznayka.www.hibernate.Message;
+import com.neznayka.www.model.CRUDRequestResponse;
 import com.neznayka.www.model.DictionaryData;
 import com.neznayka.www.model.DictionaryMap;
 
@@ -12,10 +13,10 @@ import java.util.List;
  */
 public interface ConfigDictionaryDAOIntf {
 
-    DictionaryData create(DictionaryMap dictionaryMap);
-    Integer delete(int id);
-    DictionaryData update(DictionaryMap dictionaryMap);
-    List<DictionaryData> list(int offset, int records);
+    CRUDRequestResponse create(CRUDRequestResponse crudRequestResponse);
+    CRUDRequestResponse delete(CRUDRequestResponse crudRequestResponse);
+    CRUDRequestResponse update(CRUDRequestResponse crudRequestResponse);
+    CRUDRequestResponse list(int offset, int records);
     List<Message> listMessage();
     Long getTotal();
 }

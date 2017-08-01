@@ -3,8 +3,10 @@ package com.neznayka.www.dao.config;
 import com.neznayka.www.controller.NeznaykaConfigDictionaryController;
 import com.neznayka.www.hibernate.Message;
 import com.neznayka.www.hibernate.Tag;
+import com.neznayka.www.model.CRUDRequestResponse;
 import com.neznayka.www.model.DictionaryData;
 import com.neznayka.www.model.DictionaryMap;
+import com.neznayka.www.model.Pager;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.json.XMLTokener.entity;
 
@@ -33,9 +32,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
 
     @Override
     @Transactional
-    public DictionaryData create(DictionaryMap dictionaryMap) {
+    public CRUDRequestResponse create(CRUDRequestResponse crudRequestResponse) {
 
-       DictionaryData responseInsert = null;
+       /*DictionaryData responseInsert = null;
        Set<Tag> tags = new HashSet<Tag>();
        for(String tagstr:dictionaryMap.getTags()){
            Tag tag = new Tag();
@@ -44,122 +43,59 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
        }
         Message message = new Message();
         message.setValue(dictionaryMap.getMessage());
-        message.setTags(tags);
+        message.setTags(tags);*/
 
-
+        Message message = crudRequestResponse.getMessage();
         Session session = sessionFactory.getCurrentSession();
         System.out.println("MESSAGEID "+message.getId());
-        /*Message checkMessage = (Message)sessionFactory.getCurrentSession().load(Message.class,message.getId());
-        if(checkMessage!=null){
-            System.out.println("update message");
-            message = checkMessage;
-            session.update(message);
-        }else{
-            System.out.println("add new message");
-            session.save(message);
-        }*/
-
         session.saveOrUpdate(message);
         System.out.println("MESSAGEID "+message.getId());
 
         Integer id = message.getId();
         log.info("Id entry="+id);
-        /*String hql ="from Message m where m.id=:id";
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setInteger("id", id);
-        message =*/
-        responseInsert = new DictionaryData();
-        responseInsert.setMessage(message.getValue());
-        responseInsert.setId(id);
-        List<String> tagsList= new ArrayList<String>();
-        for(Tag tag:message.getTags()){
-           tagsList.add(tag.getTag());
-        }
-        responseInsert.setTags(tagsList);
-        return responseInsert;
+        CRUDRequestResponse  response = new CRUDRequestResponse(message);
+
+        return response;
     }
 
     @Override
     @Transactional
-    public Integer delete(int id) {
-        String hql ="from Message m where m.id=:id";
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setInteger("id", id);
-        Message message =  (Message)query.list().get(0);
-        sessionFactory.getCurrentSession().delete(message);
-        return id;
+    public CRUDRequestResponse delete(CRUDRequestResponse crudRequestResponse) {
+
+        Message message=crudRequestResponse.getMessage();
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(message);
+        return crudRequestResponse;
     }
 
     @Override
     @Transactional
-    public DictionaryData update(DictionaryMap dictionaryMap) {
-        DictionaryData responseInsert = null;
-        Integer id = dictionaryMap.getId();
-        String hql ="from Message m where m.id=:id";
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setInteger("id", id);
-        Message message =  (Message)query.list().get(0);
-        message.setValue(dictionaryMap.getMessage());
-        Set<Tag> tags = message.getTags();
-        Set<Tag> tagsNew = new HashSet<Tag>();
-        List<String> tagsStrList = dictionaryMap.getTags();
-        int i=0;
-        for(Tag t:tags){
-            t.setTag(tagsStrList.get(i));
-            i++;
-            tagsNew.add(t);
-            sessionFactory.getCurrentSession().update(t);
-        }
-        message.setTags(tagsNew);
-        sessionFactory.getCurrentSession().update(message);
-        hql ="from Message m where m.id=:id";
-        query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setInteger("id", id);
-        message = (Message) query.list().get(0);
-        responseInsert = new DictionaryData();
-        responseInsert.setMessage(message.getValue());
-        responseInsert.setId(message.getId());
-        List<String> tagsList= new ArrayList<String>();
-        for(Tag tag:message.getTags()){
-            tagsList.add(tag.getTag());
-        }
-        responseInsert.setTags(tagsList);
-        return responseInsert;
+    public CRUDRequestResponse update(CRUDRequestResponse crudRequestResponse) {
+        Message message = crudRequestResponse.getMessage();
+        Session session = sessionFactory.getCurrentSession();
+        session.update(message);
+        crudRequestResponse.setMessage(message);
+        return crudRequestResponse;
     }
 
     @Override
     @Transactional
-    public List<DictionaryData> list(int offset, int records) {
+    public CRUDRequestResponse list(int offset, int records) {
         int start = offset;
         int stop = offset+records;
         log.info("Start="+start);
         log.info("Stop="+stop);
-        /*DictionaryData responseInsert = new DictionaryData();
-        String hql ="from Message m where m.id>:start AND m.id<=:stop ORDER BY m.id ASC";
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setInteger("start", start);
-        query.setInteger("stop", stop);
-        List<Message> messageList =  query.list();*/
+
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Message.class);
         criteria.setFirstResult(start);
         criteria.setMaxResults(stop);
-        List<Message> messageList = criteria.list();
-        List<DictionaryData> dictionaryDataList = new ArrayList<DictionaryData>();
-        log.info("Find "+messageList.size());
-        for(Message message:messageList){
-            DictionaryData dictionaryData = new DictionaryData();
-            dictionaryData.setId(message.getId());
-            dictionaryData.setMessage(message.getValue());
-            List<String> tagsList= new ArrayList<String>();
-            for(Tag tag:message.getTags()){
-                tagsList.add(tag.getTag());
-            }
-            dictionaryData.setTags(tagsList);
-            dictionaryDataList.add(dictionaryData);
-
-
-        }
-        return dictionaryDataList;
+        List<Message> messageList = new ArrayList<Message>();
+        messageList.addAll((List<Message> )criteria.list());
+        CRUDRequestResponse crudRequestResponse = new CRUDRequestResponse();
+        crudRequestResponse.setRows(messageList);
+        Pager pager = new Pager(offset,records,messageList.size());
+        crudRequestResponse.setPager(pager);
+        return crudRequestResponse;
     }
 
     @Override
