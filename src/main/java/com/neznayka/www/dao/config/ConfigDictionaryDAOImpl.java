@@ -49,7 +49,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
 
         Session session = sessionFactory.getCurrentSession();
         System.out.println("MESSAGEID "+message.getId());
-        Message checkMessage = (Message)sessionFactory.getCurrentSession().load(Message.class,message.getId());
+        /*Message checkMessage = (Message)sessionFactory.getCurrentSession().load(Message.class,message.getId());
         if(checkMessage!=null){
             System.out.println("update message");
             message = checkMessage;
@@ -57,8 +57,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         }else{
             System.out.println("add new message");
             session.save(message);
-        }
+        }*/
 
+        session.saveOrUpdate(message);
         System.out.println("MESSAGEID "+message.getId());
 
         Integer id = message.getId();
