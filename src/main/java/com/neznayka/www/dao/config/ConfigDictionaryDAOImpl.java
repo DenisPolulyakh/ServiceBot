@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.json.XMLTokener.entity;
+
 
 @Repository
 public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
@@ -48,13 +50,14 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
 
 
 
-        sessionFactory.getCurrentSession().save(message);
-        Integer id = (Integer)sessionFactory.getCurrentSession().save(message);
+
+        sessionFactory.getCurrentSession().saveOrUpdate(message);
+        Integer id = message.getId();
         log.info("Id entry="+id);
         String hql ="from Message m where m.id=:id";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setInteger("id", id);
-        message = (Message) query.list().get(0);
+        message = (Message)sessionFactory.getCurrentSession().load(Message.class,id);
         responseInsert = new DictionaryData();
         responseInsert.setMessage(message.getValue());
         responseInsert.setId(id);
