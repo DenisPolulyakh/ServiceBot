@@ -21,8 +21,8 @@ public class Tag {
     private String tag;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
-    private Set<Message> message = new HashSet<Message>();
+   /* @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+    private Set<Message> message = new HashSet<Message>();*/
 
 
     public int getId() {
@@ -41,30 +41,8 @@ public class Tag {
         this.tag = tag;
     }
 
-    public Set<Message> getMessage() {
-        return message;
-    }
-
-    public void setMessage(Set<Message> message) {
-        this.message = message;
-    }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Tag tag1 = (Tag) o;
 
-        if (id != tag1.id) return false;
-        return tag != null ? tag.equals(tag1.tag) : tag1.tag == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (tag != null ? tag.hashCode() : 0);
-        return result;
-    }
 }

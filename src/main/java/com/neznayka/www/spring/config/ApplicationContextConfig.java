@@ -123,7 +123,8 @@ public class ApplicationContextConfig {
 
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 
-        sessionBuilder.addAnnotatedClasses(Tag.class, Message.class);
+        sessionBuilder.addAnnotatedClasses(Message.class);
+        sessionBuilder.addAnnotatedClasses(Tag.class);
 
         sessionBuilder.setProperty("hibernate.hbm2ddl.auto", "create");
         sessionBuilder.setProperty("hibernate.show_sql", "true");

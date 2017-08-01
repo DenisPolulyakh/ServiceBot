@@ -26,7 +26,7 @@ public class PhraseProcessor {
         text = text.toLowerCase();
         List<Message> listMessage = configDAO.listMessage();
         for(Message m:listMessage){
-            Set<Tag> tagList = m.getTags();
+            List<Tag> tagList = m.getTags();
             int k = 0;
             for(Tag t:tagList){
                 String[] split = t.getTag().split(" ");

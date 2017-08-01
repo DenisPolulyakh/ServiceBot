@@ -1,12 +1,12 @@
 package com.neznayka.www.dao.config;
 
-import com.neznayka.www.controller.NeznaykaConfigDictionaryController;
+
 import com.neznayka.www.hibernate.Message;
-import com.neznayka.www.hibernate.Tag;
+
 import com.neznayka.www.model.CRUDRequestResponse;
-import com.neznayka.www.model.DictionaryData;
-import com.neznayka.www.model.DictionaryMap;
+
 import com.neznayka.www.model.Pager;
+
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,12 +85,11 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         int stop = offset+records;
         log.info("Start="+start);
         log.info("Stop="+stop);
-
+        System.out.print(start);
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Message.class);
-        criteria.setFirstResult(start);
-        criteria.setMaxResults(stop);
-        List<Message> messageList = new ArrayList<Message>();
-        messageList.addAll((List<Message> )criteria.list());
+        List<Message> messageList = (List<Message>) sessionFactory.getCurrentSession()
+                .createCriteria(Message.class).setFirstResult(start).setMaxResults(stop).list();
+        System.out.print(messageList);
         CRUDRequestResponse crudRequestResponse = new CRUDRequestResponse();
         crudRequestResponse.setRows(messageList);
         Pager pager = new Pager(offset,records,messageList.size());

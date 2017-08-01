@@ -24,12 +24,16 @@ public class Message {
 
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    /*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "message_tags",  joinColumns = {
             @JoinColumn(name = "MESSAGE_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "TAG_ID",
                     nullable = false, updatable = false) })
-    private Set<Tag> tags = new HashSet<Tag>();
+    private Set<Tag> tags = new HashSet<Tag>();*/
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @Column(name = "TAG")
+    private List<Tag> tags;
 
     public Message() {
     }
@@ -42,12 +46,11 @@ public class Message {
         this.id = id;
     }
 
-
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
@@ -59,23 +62,6 @@ public class Message {
         this.value = value;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Message message = (Message) o;
-
-        if (id != message.id) return false;
-        return value != null ? value.equals(message.value) : message.value == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
-    }
 }
 
 
