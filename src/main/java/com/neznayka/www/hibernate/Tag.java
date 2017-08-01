@@ -24,7 +24,7 @@ public class Tag {
     private String tag;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tag")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
    private Set<Message> message = new HashSet<Message>();
 
 
