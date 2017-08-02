@@ -62,6 +62,14 @@ public class Message {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                ", tags=" + tags +
+                '}';
+    }
 }
 
 
