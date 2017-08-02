@@ -47,9 +47,8 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
 
         Message message = crudRequestResponse.getMessage();
         Session session = sessionFactory.getCurrentSession();
-        System.out.println("MESSAGEID "+message.getId());
         session.saveOrUpdate(message);
-        System.out.println("MESSAGEID "+message.getId());
+
 
         Integer id = message.getId();
         log.info("Id entry="+id);
@@ -61,10 +60,11 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     @Override
     @Transactional
     public CRUDRequestResponse delete(CRUDRequestResponse crudRequestResponse) {
-
-        Message message=crudRequestResponse.getMessage();
+        int id = crudRequestResponse.getId();
         Session session = sessionFactory.getCurrentSession();
+        Message message =  (Message) session.get(Message.class, id);
         session.delete(message);
+        crudRequestResponse.setId(id);
         return crudRequestResponse;
     }
 

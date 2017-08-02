@@ -20,10 +20,17 @@ public class Tag {
     @Column(name = "TAG", nullable = false)
     private String tag;
 
+    @ManyToOne
+    private Message message;
 
-   /* @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
-    private Set<Message> message = new HashSet<Message>();*/
 
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
+    }
 
     public int getId() {
         return id;

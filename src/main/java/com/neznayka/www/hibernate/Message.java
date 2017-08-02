@@ -31,7 +31,7 @@ public class Message {
                     nullable = false, updatable = false) })
     private Set<Tag> tags = new HashSet<Tag>();*/
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval=true)
     @Column(name = "TAG")
     private List<Tag> tags;
 
