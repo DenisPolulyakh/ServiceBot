@@ -38,7 +38,7 @@ public class PhraseProcessor {
                     }
                 }
                 log.info(CLASS_NAME + " " + METHOD_NAME + " К " + k);
-                if(k/split.length*100>80){
+                if(k/split.length*100>92){
                     return m.getValue();
                 }
             }

@@ -58,7 +58,7 @@ public class NeznaykaConfigDictionaryController {
     public ResponseEntity<CRUDRequestResponse> update(@RequestBody CRUDRequestResponse crudRequestResponse) {
         log.info("UPDATE");
         try {
-            crudRequestResponse = configDAO.create(crudRequestResponse);
+            crudRequestResponse = configDAO.update(crudRequestResponse);
             crudRequestResponse.setStatus("success");
             return new ResponseEntity<CRUDRequestResponse>(crudRequestResponse, HttpStatus.OK);
         } catch (Exception e) {
