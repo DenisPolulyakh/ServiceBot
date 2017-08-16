@@ -21,9 +21,9 @@ public class Tag {
     private String tag;
 
     @ManyToOne
-    @JoinTable(name="message_tags",
+    /*@JoinTable(name="message_tags",
             joinColumns=@JoinColumn(name="TAG_ID"),
-            inverseJoinColumns=@JoinColumn(name="MESSAGE_ID"))
+            inverseJoinColumns=@JoinColumn(name="MESSAGE_ID"))*/
     private Message message;
 
     public Message getMessage() {

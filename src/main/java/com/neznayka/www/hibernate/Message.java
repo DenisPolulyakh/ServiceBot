@@ -32,9 +32,9 @@ public class Message {
     private Set<Tag> tags = new HashSet<Tag>();*/
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name="message_tags",
+   /* @JoinTable(name="message_tags",
             joinColumns=@JoinColumn(name="MESSAGE_ID"),
-            inverseJoinColumns=@JoinColumn(name="TAG_ID"))
+            inverseJoinColumns=@JoinColumn(name="TAG_ID"))*/
     private Set<Tag> tags;
 
     public Message() {
