@@ -141,7 +141,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     }
 
     private MatchMode getMatchMode(String key){
-        if(key.toLowerCase().equals("при")) {return MatchMode.EXACT;}
+        if(key.toLowerCase().equals("при")||key.length()<3) {return MatchMode.EXACT;}
         return MatchMode.START;
     }
 
