@@ -18,5 +18,6 @@ public interface ConfigDictionaryDAOIntf {
     CRUDRequestResponse update(CRUDRequestResponse crudRequestResponse);
     CRUDRequestResponse list(int offset, int records);
     List<Message> listMessage();
+    List searchAnswer(String[] keyWords);
     Long getTotal();
 }

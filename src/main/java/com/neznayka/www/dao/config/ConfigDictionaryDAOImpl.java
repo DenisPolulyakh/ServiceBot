@@ -3,12 +3,15 @@ package com.neznayka.www.dao.config;
 
 import com.neznayka.www.hibernate.Message;
 
+import com.neznayka.www.hibernate.Tag;
 import com.neznayka.www.model.CRUDRequestResponse;
 
 import com.neznayka.www.model.Pager;
 
 import org.apache.log4j.Logger;
 import org.hibernate.*;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,11 +50,26 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
 
         Message message = crudRequestResponse.getMessage();
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(message);
 
 
-        Integer id = message.getId();
-        log.info("Id entry="+id);
+
+        /*Integer id = message.getId();
+        Set<Tag> tagsMessage = message.getTags();
+        Set<Tag> tags = new HashSet<>();
+
+        for(Tag tag:tagsMessage){
+            log.info(tag);
+            Tag saveTag = new Tag();
+            saveTag.setTag(tag.getTag());
+            saveTag.setMessage(message);
+            tags.add(saveTag);
+        }
+
+        message.setTags(tags);*/
+
+        session.save(message);
+       // session.save(message);
+        //log.info("Id entry="+id);
         CRUDRequestResponse  response = new CRUDRequestResponse(message);
 
         return response;
@@ -63,6 +81,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         int id = crudRequestResponse.getId();
         Session session = sessionFactory.getCurrentSession();
         Message message =  (Message) session.get(Message.class, id);
+
         session.delete(message);
         crudRequestResponse.setId(id);
         return crudRequestResponse;
@@ -105,6 +124,22 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
                 .createCriteria(Message.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return answersList;
     }
+
+    @Override
+    @Transactional
+    public List<Message> searchAnswer(String[] keyWords) {
+        log.debug(keyWords);
+        List<Message> answers = new ArrayList<>();
+        for(String key:keyWords) {
+            Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
+            query.createAlias("tags", "tagsJoin");
+            query.add(Restrictions.like("tagsJoin.tag", key.substring(0,key.length()-1), MatchMode.START));
+            answers.addAll(query.list());
+        }
+
+        return answers;
+    }
+
 
     @Override
     @Transactional
