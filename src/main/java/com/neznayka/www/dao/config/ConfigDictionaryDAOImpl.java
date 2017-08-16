@@ -131,17 +131,20 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         log.debug(keyWords);
         List<Message> answers = new ArrayList<>();
         for(String key:keyWords) {
-            Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
-            query.createAlias("tags", "tagsJoin");
-            query.add(Restrictions.like("tagsJoin.tag", key, getMatchMode(key)));
-            answers.addAll(query.list());
+            if(key.length()>=3) {
+                Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
+                query.createAlias("tags", "tagsJoin");
+
+                query.add(Restrictions.like("tagsJoin.tag", key, getMatchMode(key)));
+                answers.addAll(query.list());
+            }
         }
 
         return answers;
     }
 
     private MatchMode getMatchMode(String key){
-        if(key.toLowerCase().equals("при")||key.length()<3) {return MatchMode.EXACT;}
+        if(key.toLowerCase().equals("при")) {return MatchMode.EXACT;}
         return MatchMode.START;
     }
 
