@@ -133,7 +133,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         for(String key:keyWords) {
             Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
             query.createAlias("tags", "tagsJoin");
-            query.add(Restrictions.like("tagsJoin.tag", key.substring(0,key.length()-1), MatchMode.START));
+            query.add(Restrictions.like("tagsJoin.tag", key, MatchMode.START));
             answers.addAll(query.list());
         }
 
