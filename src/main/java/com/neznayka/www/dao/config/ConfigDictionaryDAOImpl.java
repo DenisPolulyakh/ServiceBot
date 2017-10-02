@@ -147,11 +147,13 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         }
         query.add(or);
         answers.addAll(query.list());
-        query = sessionFactory.getCurrentSession().
-        createCriteria(Message.class);
-        query.createAlias("tags", "tagsJoin");
-        query.add(Restrictions.like(("tagsJoin.tag"), keyAll.trim(), MatchMode.ANYWHERE));
-        answers.addAll(query.list());
+        if(keyAll.trim().length()>5) {
+            query = sessionFactory.getCurrentSession().
+                    createCriteria(Message.class);
+            query.createAlias("tags", "tagsJoin");
+            query.add(Restrictions.like(("tagsJoin.tag"), keyAll.trim(), MatchMode.ANYWHERE));
+            answers.addAll(query.list());
+        }
         return answers;
     }
 
