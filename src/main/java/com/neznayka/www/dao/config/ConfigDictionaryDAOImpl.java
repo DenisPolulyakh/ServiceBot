@@ -10,6 +10,7 @@ import com.neznayka.www.model.Pager;
 
 import org.apache.log4j.Logger;
 import org.hibernate.*;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,10 +134,11 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         List<Message> answers = new ArrayList<>();
         Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
         query.createAlias("tags", "tagsJoin");
+        Disjunction or = Restrictions.disjunction();
         for (String key : keyWords) {
-            query.add(Restrictions.or(Restrictions.like("tagsJoin.tag", key)));
+            or.add(Restrictions.like("tagsJoin.tag", key));
         }
-
+        query.add(or);
 
         answers.addAll(query.list());
 
