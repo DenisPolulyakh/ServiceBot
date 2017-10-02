@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import sun.misc.Request;
 
 
 import javax.sql.DataSource;
@@ -26,7 +27,7 @@ import static org.json.XMLTokener.entity;
 
 
 @Repository
-public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
+public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
     private static final String CLASS_NAME = ConfigDictionaryDAOImpl.class.getName();
     private static final Logger log = Logger.getLogger(CLASS_NAME);
     @Autowired
@@ -68,9 +69,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         message.setTags(tags);*/
 
         session.save(message);
-       // session.save(message);
+        // session.save(message);
         //log.info("Id entry="+id);
-        CRUDRequestResponse  response = new CRUDRequestResponse(message);
+        CRUDRequestResponse response = new CRUDRequestResponse(message);
 
         return response;
     }
@@ -80,7 +81,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     public CRUDRequestResponse delete(CRUDRequestResponse crudRequestResponse) {
         int id = crudRequestResponse.getId();
         Session session = sessionFactory.getCurrentSession();
-        Message message =  (Message) session.get(Message.class, id);
+        Message message = (Message) session.get(Message.class, id);
 
         session.delete(message);
         crudRequestResponse.setId(id);
@@ -102,9 +103,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     @Transactional
     public CRUDRequestResponse list(int offset, int records) {
         int start = offset;
-        int stop = offset+records;
-        log.info("Start="+start);
-        log.info("Stop="+stop);
+        int stop = offset + records;
+        log.info("Start=" + start);
+        log.info("Stop=" + stop);
         System.out.print(start);
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Message.class);
         List<Message> messageList = (List<Message>) sessionFactory.getCurrentSession()
@@ -112,7 +113,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
         System.out.print(messageList);
         CRUDRequestResponse crudRequestResponse = new CRUDRequestResponse();
         crudRequestResponse.setRows(messageList);
-        Pager pager = new Pager(offset,records,messageList.size());
+        Pager pager = new Pager(offset, records, messageList.size());
         crudRequestResponse.setPager(pager);
         return crudRequestResponse;
     }
@@ -130,21 +131,23 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     public List<Message> searchAnswer(String[] keyWords) {
         log.debug(keyWords);
         List<Message> answers = new ArrayList<>();
-        for(String key:keyWords) {
-            if(key.length()>=3) {
-                Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
-                query.createAlias("tags", "tagsJoin");
-
-                query.add(Restrictions.like("tagsJoin.tag", key, getMatchMode(key)));
-                answers.addAll(query.list());
-            }
+        Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
+        query.createAlias("tags", "tagsJoin");
+        for (String key : keyWords) {
+            query.add(Restrictions.or(Restrictions.eq("tagsJoin.tag", key)));
         }
+
+
+        answers.addAll(query.list());
+
 
         return answers;
     }
 
-    private MatchMode getMatchMode(String key){
-        if(key.toLowerCase().equals("при")) {return MatchMode.EXACT;}
+    private MatchMode getMatchMode(String key) {
+        if (key.toLowerCase().equals("при")) {
+            return MatchMode.EXACT;
+        }
         return MatchMode.START;
     }
 
@@ -152,9 +155,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf{
     @Override
     @Transactional
     public Long getTotal() {
-        String hql ="select count(*) from Message";
+        String hql = "select count(*) from Message";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        Long total =  (Long) query.uniqueResult();
+        Long total = (Long) query.uniqueResult();
         return total;
     }
 }
