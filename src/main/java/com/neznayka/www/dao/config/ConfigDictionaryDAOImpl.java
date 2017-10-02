@@ -138,6 +138,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         for (String key : keyWords) {
             or.add(Restrictions.like("tagsJoin.tag", key));
         }
+        or.add(Restrictions.like("tagsJoin.tag", keyWords));
         query.add(or);
 
         answers.addAll(query.list());
