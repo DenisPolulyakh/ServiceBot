@@ -142,7 +142,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             keyAll=keyAll+key+" ";
         }
         // дополнительное условие вся фраза как тег
-        or.add(Restrictions.ilike("tagsJoin.tag", keyAll.trim()));
+        or.add(Restrictions.like("tagsJoin.tag", MatchMode.ANYWHERE));
         query.add(or);
 
         answers.addAll(query.list());
@@ -155,7 +155,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         if (key.toLowerCase().equals("при")) {
             return MatchMode.EXACT;
         }
-        return MatchMode.START;
+        return MatchMode.ANYWHERE;
     }
 
 
