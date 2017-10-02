@@ -135,10 +135,12 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
         query.createAlias("tags", "tagsJoin");
         Disjunction or = Restrictions.disjunction();
+        String keyAll="";
         for (String key : keyWords) {
             or.add(Restrictions.like("tagsJoin.tag", key));
+
         }
-        or.add(Restrictions.like("tagsJoin.tag", keyWords));
+        or.add(Restrictions.in("tagsJoin.tag", keyWords));
         query.add(or);
 
         answers.addAll(query.list());
