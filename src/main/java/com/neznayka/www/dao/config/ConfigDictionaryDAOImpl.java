@@ -138,7 +138,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         String keyAll = "";
         //сравниваем каждый тег
         for (String key : keyWords) {
-            if (key.length() > 3) {
+            if (key.length() >4 ) {
                 or.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
             } else {
                 or.add(Restrictions.eq("tagsJoin.tag", key));
