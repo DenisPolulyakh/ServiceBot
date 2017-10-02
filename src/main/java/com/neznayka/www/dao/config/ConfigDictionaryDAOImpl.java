@@ -136,10 +136,12 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         query.createAlias("tags", "tagsJoin");
         Disjunction or = Restrictions.disjunction();
         String keyAll="";
+        //сравниваем каждый тег
         for (String key : keyWords) {
             or.add(Restrictions.like("tagsJoin.tag", key));
             keyAll=keyAll+key+" ";
         }
+        // дополнительное условие вся фраза как тег
         or.add(Restrictions.like("tagsJoin.tag", keyAll.trim()));
         query.add(or);
 
