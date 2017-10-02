@@ -142,7 +142,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             keyAll=keyAll+key+" ";
         }
         // дополнительное условие вся фраза как тег
-        or.add(Restrictions.eq("tagsJoin.tag", keyAll.trim()));
+        or.add(Restrictions.ilike("tagsJoin.tag", keyAll.trim(),MatchMode.ANYWHERE));
         query.add(or);
 
         answers.addAll(query.list());
