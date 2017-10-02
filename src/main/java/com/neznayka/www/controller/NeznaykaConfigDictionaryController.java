@@ -100,6 +100,7 @@ public class NeznaykaConfigDictionaryController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
     public Message search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
         text = URLDecoder.decode(text, "UTF-8");
         log.info("After decode: " + text);
