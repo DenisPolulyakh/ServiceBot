@@ -147,7 +147,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             answers.addAll(query.list());
         }
 
-        if(answers.size()<0) {
+
             Disjunction or = Restrictions.disjunction();
             query = sessionFactory.getCurrentSession().createCriteria(Message.class);
             //сравниваем каждый тег
@@ -161,7 +161,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             }
             query.add(or);
             answers.addAll(query.list());
-        }
+
 
 
 
