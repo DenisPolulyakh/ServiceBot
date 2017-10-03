@@ -134,28 +134,38 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         List<Message> answers = new ArrayList<>();
         Criteria query = sessionFactory.getCurrentSession().createCriteria(Message.class);
         query.createAlias("tags", "tagsJoin");
-        Disjunction or = Restrictions.disjunction();
         String keyAll = "";
-        //сравниваем каждый тег
         for (String key : keyWords) {
-            if (key.length() >4 ) {
-                or.add(Restrictions.like("tagsJoin.tag", key));
-            } else {
-                or.add(Restrictions.eq("tagsJoin.tag", key));
-            }
             keyAll = keyAll + key + " ";
         }
-        query.add(or);
-        answers.addAll(query.list());
-        if(answers.size()>0) {
-            if (keyAll.trim().length() > 5) {
-                query = sessionFactory.getCurrentSession().
-                        createCriteria(Message.class);
-                query.createAlias("tags", "tagsJoin");
-                query.add(Restrictions.like(("tagsJoin.tag"), keyAll.trim(), MatchMode.ANYWHERE));
-                answers.addAll(query.list());
-            }
+        //ищем фразу полностью
+        if (keyAll.trim().length() > 5) {
+            query = sessionFactory.getCurrentSession().
+                    createCriteria(Message.class);
+            query.createAlias("tags", "tagsJoin");
+            query.add(Restrictions.like(("tagsJoin.tag"), keyAll.trim(), MatchMode.ANYWHERE));
+            answers.addAll(query.list());
         }
+
+        if(answers.size()<0) {
+            Disjunction or = Restrictions.disjunction();
+            query = sessionFactory.getCurrentSession().createCriteria(Message.class);
+            //сравниваем каждый тег
+            for (String key : keyWords) {
+                if (key.length() > 4) {
+                    or.add(Restrictions.like("tagsJoin.tag", key));
+                } else {
+                    or.add(Restrictions.eq("tagsJoin.tag", key));
+                }
+
+            }
+            query.add(or);
+            answers.addAll(query.list());
+        }
+
+
+
+
         return answers;
     }
 
