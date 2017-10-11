@@ -101,13 +101,13 @@ public class NeznaykaConfigDictionaryController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
-    public Message search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
+    public MessageAnswer search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
         text = URLDecoder.decode(text, "UTF-8");
         log.info("After decode: " + text);
-        Message message = new Message();
+
         PhraseProcessor phraseProcessor = new PhraseProcessor();
         phraseProcessor.setConfigDAO(configDAO);
-        message.setPhrase(phraseProcessor.getMessageToAnswer(text));
-        return message;
+        return  phraseProcessor.getMessageToAnswer(text);
+
     }
 }

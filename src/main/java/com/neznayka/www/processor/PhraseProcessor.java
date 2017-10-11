@@ -5,6 +5,7 @@ import com.neznayka.www.hibernate.Message;
 import com.neznayka.www.hibernate.Tag;
 
 
+import com.neznayka.www.model.MessageAnswer;
 import com.neznayka.www.utils.BotUtilMethods;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
@@ -23,9 +24,11 @@ import java.util.logging.Logger;
 public class PhraseProcessor {
     private static final String CLASS_NAME = "PhraseProcessor";
     private static final Logger log = Logger.getLogger(CLASS_NAME);
+    private static final String DEFAULT_ANSWER="Уточните ваш вопрос";
     private ConfigDictionaryDAOIntf configDAO;
 
-    public String getMessageToAnswer(String message) {
+    public MessageAnswer getMessageToAnswer(String message) {
+        MessageAnswer messageAnswer = new MessageAnswer();
         final String METHOD_NAME = "getMessageToAnswer";
         String text = BotUtilMethods.getPropertyFromJSON(message, "text");
         log.info(CLASS_NAME + " " + METHOD_NAME + " question: " + text);
@@ -38,13 +41,19 @@ public class PhraseProcessor {
 
         if (listMessage != null) {
             if (listMessage.size() > 0 && listMessage.size() < 2) {
-                return listMessage.get(0).getValue();
+                messageAnswer.setPhrase(listMessage.get(0).getValue());
             }
-            return getOnlyOneMessage(listMessage,text.split(" " )).getValue();
+            messageAnswer.setPhrase(getOnlyOneMessage(listMessage,text.split(" " )).getValue());
 
         }
 
-        return "Уточните ваш вопрос";
+        if(messageAnswer.getPhrase().equalsIgnoreCase(DEFAULT_ANSWER)){
+            messageAnswer.setFound(false);
+        }else{
+            messageAnswer.setFound(true);
+        }
+
+        return  messageAnswer;
     }
 
 
@@ -52,7 +61,7 @@ public class PhraseProcessor {
         log.info(messages.toString());
         log.info("SIZE "+messages.size());
         Map<Integer, Message> orderMatchesMap = new TreeMap<Integer, Message>();
-// ищем сколько раз встречается один итот же message id
+        // ищем сколько раз встречается один итот же message id
         for (Message m : messages) {
             int match = 0;
             int id=m.getId();
@@ -67,7 +76,8 @@ public class PhraseProcessor {
         }
 
         Message findMessage=new Message();
-        findMessage.setValue("Уточните ваш вопрос");
+        findMessage.setValue(DEFAULT_ANSWER);
+        //ищем максимально вхождение с одинаковым message id
         if(orderMatchesMap.size()>0) {
             Object[] keysMap = orderMatchesMap.keySet().toArray();
             int highestKey = (Integer) keysMap[keysMap.length - 1];
