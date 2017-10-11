@@ -52,7 +52,7 @@ public class PhraseProcessor {
         log.info(messages.toString());
         log.info("SIZE "+messages.size());
         Map<Integer, Message> orderMatchesMap = new TreeMap<Integer, Message>();
-
+// ищем сколько раз встречается один итот же message id
         for (Message m : messages) {
             int match = 0;
             int id=m.getId();

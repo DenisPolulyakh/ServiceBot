@@ -10,10 +10,11 @@ import java.util.Set;
 
 public class Message {
 
-    private List<String> phrase = new ArrayList<String>();
 
     private Set codeCurrency;
     private Set nameCurrency;
+
+    private String phrase;
 
     public Set getCodeCurrency() {
         return codeCurrency;
@@ -31,19 +32,13 @@ public class Message {
         this.nameCurrency = nameCurrency;
     }
 
-    public List<String> getPhrase() {
+    public String getPhrase() {
         return phrase;
     }
 
-    public void setPhrase(List<String> word) {
+    public void setPhrase(String phrase) {
         this.phrase = phrase;
     }
-
-    public void addPhrase(String word){
-        phrase.add(word);
-    }
-
-    public void resetPhrase(){
-        phrase.clear();
-    }
 }
+
+
