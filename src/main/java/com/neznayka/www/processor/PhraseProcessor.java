@@ -44,7 +44,7 @@ public class PhraseProcessor {
 
         }
 
-        return "Не знаю :)";
+        return "Уточните ваш вопрос";
     }
 
 
@@ -67,7 +67,7 @@ public class PhraseProcessor {
         }
 
         Message findMessage=new Message();
-        findMessage.setValue("Не знаю :)");
+        findMessage.setValue("Уточните ваш вопрос");
         if(orderMatchesMap.size()>0) {
             Object[] keysMap = orderMatchesMap.keySet().toArray();
             int highestKey = (Integer) keysMap[keysMap.length - 1];
