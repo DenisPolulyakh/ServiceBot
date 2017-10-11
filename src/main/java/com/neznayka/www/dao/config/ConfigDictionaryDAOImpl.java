@@ -149,7 +149,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
 
 
             Disjunction or = Restrictions.disjunction();
+
             query = sessionFactory.getCurrentSession().createCriteria(Message.class);
+            query.createAlias("tags", "tagsJoin");
             //сравниваем каждый тег
             for (String key : keyWords) {
                 if (key.length() > 4) {
