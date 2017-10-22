@@ -7,6 +7,7 @@ import com.neznayka.www.hibernate.Message;
 import com.neznayka.www.model.CRUDRequestResponse;
 import com.neznayka.www.model.MessageAnswer;
 import com.neznayka.www.model.Pager;
+import com.neznayka.www.utils.BotUtilMethods;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -51,7 +52,8 @@ public class LoggingService  {
                 if(id==null){
                         id=getId();
                 }
-                log.info("ID="+id+" QUESTIONS="+questions+" MESSAGE="+messageToAnswer);
+                String text = BotUtilMethods.getPropertyFromJSON(messageToAnswer, "text");
+                log.info("ID="+id+" QUESTIONS="+questions+" MESSAGE="+text);
                 Logging logging = new Logging();
                 logging.setId(id);
                 logging.setQuestion(questions);
