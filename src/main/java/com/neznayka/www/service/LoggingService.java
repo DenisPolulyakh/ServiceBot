@@ -46,13 +46,13 @@ public class LoggingService  {
         }
 
         @Transactional
-        public void logMessage(Long id, String questions, String messageToAnswer){
+        public void logMessage(Long id, String questions, String message){
                 Session session = sessionFactory.getCurrentSession();
 
                 if(id==null){
                         id=getId();
                 }
-                String text = BotUtilMethods.getPropertyFromJSON(messageToAnswer, "text");
+                String text = BotUtilMethods.getPropertyFromJSON(message, "text");
                 log.info("ID="+id+" QUESTIONS="+questions+" MESSAGE="+text);
                 Logging logging = new Logging();
                 logging.setId(id);
