@@ -5,6 +5,7 @@ import com.neznayka.www.dao.config.ConfigDAO;
 import com.neznayka.www.dao.config.ConfigDictionaryDAOIntf;
 import com.neznayka.www.model.*;
 import com.neznayka.www.processor.PhraseProcessor;
+import com.neznayka.www.service.LoggingService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,6 +38,11 @@ public class NeznaykaConfigDictionaryController {
     @Autowired
     @Qualifier("ConfigDAOStub")
     ConfigDAO configDAOstub;
+
+    @Autowired
+    @Qualifier("LoggingService")
+    LoggingService loggingService;
+
 
     @CrossOrigin(origins = "*", allowedHeaders = {"Origin", "X-Requested-With", "Content-Type", "Accept"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -101,13 +107,15 @@ public class NeznaykaConfigDictionaryController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
-    public MessageAnswer search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
+    public MessageAnswer search(@RequestParam(value = "id", required = false) Long id,@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
         text = URLDecoder.decode(text, "UTF-8");
         log.info("After decode: " + text);
 
         PhraseProcessor phraseProcessor = new PhraseProcessor();
         phraseProcessor.setConfigDAO(configDAO);
-        return  phraseProcessor.getMessageToAnswer(text);
+        MessageAnswer messageAnswer = phraseProcessor.getMessageToAnswer(text);
+        loggingService.logMessage(id,text,messageAnswer.getPhrase());
+        return  messageAnswer;
 
     }
 }
