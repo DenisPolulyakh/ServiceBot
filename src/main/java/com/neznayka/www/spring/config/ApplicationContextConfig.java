@@ -6,6 +6,7 @@ import com.neznayka.www.dao.config.ConfigDictionaryDAOImpl;
 import com.neznayka.www.dao.config.ConfigDictionaryDAOIntf;
 import com.neznayka.www.hibernate.Tag;
 import com.neznayka.www.hibernate.Message;
+import com.neznayka.www.hibernate.Logging;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +126,7 @@ public class ApplicationContextConfig {
 
         sessionBuilder.addAnnotatedClasses(Message.class);
         sessionBuilder.addAnnotatedClasses(Tag.class);
+        sessionBuilder.addAnnotatedClasses(Logging.class);
 
         sessionBuilder.setProperty("hibernate.hbm2ddl.auto", "update");
         sessionBuilder.setProperty("hibernate.show_sql", "true");
