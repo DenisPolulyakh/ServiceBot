@@ -47,11 +47,11 @@ public class LoggingService  {
         @Transactional
         public void logMessage(Long id, String questions, String messageToAnswer){
                 Session session = sessionFactory.getCurrentSession();
-                log.info("ID="+id+" QUESTIONS="+questions+" MESSAGE="+messageToAnswer);
+
                 if(id==null){
                         id=getId();
                 }
-
+                log.info("ID="+id+" QUESTIONS="+questions+" MESSAGE="+messageToAnswer);
                 Logging logging = new Logging();
                 logging.setId(id);
                 logging.setQuestion(questions);
