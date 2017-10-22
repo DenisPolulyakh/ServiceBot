@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name="LOGGING")
 public class Logging {
-
+    @Id
     @Column(name = "LOG_ID")
     private Long id;
 
