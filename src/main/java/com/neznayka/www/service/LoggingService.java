@@ -57,7 +57,7 @@ public class LoggingService  {
                 Logging logging = new Logging();
                 logging.setId(id);
                 logging.setQuestion(questions);
-                logging.setMessage(messageToAnswer);
+                logging.setMessage(text);
                 session.save(logging);
 
         }
