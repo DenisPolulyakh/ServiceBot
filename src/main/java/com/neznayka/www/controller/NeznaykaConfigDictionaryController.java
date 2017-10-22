@@ -40,7 +40,6 @@ public class NeznaykaConfigDictionaryController {
     ConfigDAO configDAOstub;
 
     @Autowired
-    @Qualifier("LoggingService")
     LoggingService loggingService;
 
 
