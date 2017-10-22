@@ -125,6 +125,7 @@ public class ApplicationContextConfig {
 
         sessionBuilder.addAnnotatedClasses(Message.class);
         sessionBuilder.addAnnotatedClasses(Tag.class);
+        sessionBuilder.addAnnotatedClasses(Logging.class);
 
         sessionBuilder.setProperty("hibernate.hbm2ddl.auto", "update");
         sessionBuilder.setProperty("hibernate.show_sql", "true");
