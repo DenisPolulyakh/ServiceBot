@@ -36,6 +36,7 @@ public class LoggingService  {
         @Qualifier("sessionFactory")
         private SessionFactory sessionFactory;
 
+
         private Long getId(){
                 Session session = sessionFactory.getCurrentSession();
                 Query query = session.createSQLQuery( "select nextval('log_id_seq')" );
@@ -43,6 +44,7 @@ public class LoggingService  {
                 return id;
         }
 
+        @Transactional
         public void logMessage(Long id, String questions, String messageToAnswer){
                 Session session = sessionFactory.getCurrentSession();
                 log.info("ID="+id+" QUESTIONS="+questions+" MESSAGE="+messageToAnswer);
