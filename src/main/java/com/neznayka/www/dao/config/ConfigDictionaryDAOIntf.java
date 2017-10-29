@@ -1,5 +1,6 @@
 package com.neznayka.www.dao.config;
 
+import com.neznayka.www.hibernate.Logging;
 import com.neznayka.www.hibernate.Message;
 import com.neznayka.www.model.CRUDRequestResponse;
 import com.neznayka.www.model.DictionaryData;
@@ -20,4 +21,5 @@ public interface ConfigDictionaryDAOIntf {
     List<Message> listMessage();
     List searchAnswer(String[] keyWords);
     Long getTotal();
+    List<Logging> getLogging();
 }
