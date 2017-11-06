@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="MESSAGE")
-public class Message {
+public class    Message {
     @Id
     @Column(name = "MESSAGE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +31,11 @@ public class Message {
                     nullable = false, updatable = false) })
     private Set<Tag> tags = new HashSet<Tag>();*/
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval=true)
-    @Column(name = "TAG")
-    private List<Tag> tags;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+   /* @JoinTable(name="message_tags",
+            joinColumns=@JoinColumn(name="MESSAGE_ID"),
+            inverseJoinColumns=@JoinColumn(name="TAG_ID"))*/
+    private Set<Tag> tags;
 
     public Message() {
     }
@@ -46,11 +48,11 @@ public class Message {
         this.id = id;
     }
 
-    public List<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 

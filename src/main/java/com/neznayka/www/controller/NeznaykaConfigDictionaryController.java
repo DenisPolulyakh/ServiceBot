@@ -5,6 +5,8 @@ import com.neznayka.www.dao.config.ConfigDAO;
 import com.neznayka.www.dao.config.ConfigDictionaryDAOIntf;
 import com.neznayka.www.model.*;
 import com.neznayka.www.processor.PhraseProcessor;
+import com.neznayka.www.service.ExportService;
+import com.neznayka.www.service.LoggingService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
-;import java.io.UnsupportedEncodingException;
+;import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 
@@ -37,6 +40,13 @@ public class NeznaykaConfigDictionaryController {
     @Autowired
     @Qualifier("ConfigDAOStub")
     ConfigDAO configDAOstub;
+
+    @Autowired
+    LoggingService loggingService;
+
+    @Autowired
+    ExportService exportService;
+
 
     @CrossOrigin(origins = "*", allowedHeaders = {"Origin", "X-Requested-With", "Content-Type", "Accept"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -100,13 +110,24 @@ public class NeznaykaConfigDictionaryController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public Message search(@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
+    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
+    public MessageAnswer search(@RequestParam(value = "id", required = false) Long id,@RequestParam(value = "message", required = false, defaultValue = "привет") String text) throws UnsupportedEncodingException {
         text = URLDecoder.decode(text, "UTF-8");
         log.info("After decode: " + text);
-        Message message = new Message();
+
         PhraseProcessor phraseProcessor = new PhraseProcessor();
         phraseProcessor.setConfigDAO(configDAO);
-        message.addPhrase(phraseProcessor.getMessageToAnswer(text));
-        return message;
+        MessageAnswer messageAnswer = phraseProcessor.getMessageToAnswer(text);
+        loggingService.logMessage(id,text,messageAnswer.getPhrase());
+        return  messageAnswer;
+
     }
+    //экспорт базы логов в эксель
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*",allowedHeaders = {"Origin","X-Requested-With","Content-Type","Accept"})
+    public void export( final HttpServletResponse response) {
+        exportService.exportToExcel(response);
+
+    }
+
 }

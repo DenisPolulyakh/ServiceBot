@@ -21,8 +21,10 @@ public class Tag {
     private String tag;
 
     @ManyToOne
+    /*@JoinTable(name="message_tags",
+            joinColumns=@JoinColumn(name="TAG_ID"),
+            inverseJoinColumns=@JoinColumn(name="MESSAGE_ID"))*/
     private Message message;
-
 
     public Message getMessage() {
         return message;
@@ -49,7 +51,11 @@ public class Tag {
     }
 
 
-
-
-
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", tag='" + tag + '\'' +
+                '}';
+    }
 }
