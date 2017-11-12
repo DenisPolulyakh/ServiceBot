@@ -70,7 +70,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         System.out.println(message);
         Session session = sessionFactory.getCurrentSession();
         int id = message.getId();
-        Message messageUpdate = (Message) session.load(Message.class,id);
+        Message messageUpdate = (Message) session.get(Message.class,id);
         log.info("VALUES"+message.getValue());
 
         messageUpdate.setValue(message.getValue());
