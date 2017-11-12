@@ -69,55 +69,7 @@ public class ApplicationContextConfig {
         return new ConfigDictionaryDAOImpl();
     }
 
-    /*@Bean(name = "botProcess")
-    public BotProcess getBotProcess() {
-        return new BotProcess();
-    }
 
-    @Bean(name = "ProcessorFactory")
-    public ProcessorFactory getProcessorFactory() {
-        return new ProcessorFactory();
-    }
-
-    @Bean(name = "memoryProcessor")
-    public MemoryProcessor getMemoryProcessor() {
-        return new MemoryProcessor();
-    }*/
-
-
-    //    @Bean(name = "memoryProcessor")
-//    public MemoryProcessor getMemoryProcessor() {
-//        return new MemoryProcessor();
-//    }
-//    @Bean(name = "courseProcessor")
-//    public CurrencyProcessor getCourseProcessor() {
-//        return new CurrencyProcessor();
-//    }
-//    @Bean(name="phraseProcessor")
-//    public PhraseProcessor gePhraseProcessor(){ return new PhraseProcessor();}
-//    @Bean(name = "wordExpression")
-//    public WordExpression getWordCourseExpression() {
-//        return new WordExpression();
-//    }
-//    @Bean(name = "currencyExpression")
-//    public CodeOrNameCurrencyExpression getCodeOrNameCurrencyExpression() {
-//        return new CodeOrNameCurrencyExpression();
-//    }
-//
-//    @Bean(name = "dateExpression")
-//    public DateExpression getDateExpression() {
-//        return new DateExpression();
-//    }
-    /*
-    @Bean(name = "codeCurrency")
-    public KeyPhrase getCodeCurrency() {
-        return new KeyPhrase();
-    }
-    @Bean(name = "variantsNameCurrency")
-    public ValueAnswer getVariantsNameCurrency() {
-        return new ValueAnswer();
-    }
-*/
     @Autowired
     @Bean(name = "sessionFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) {
@@ -133,7 +85,7 @@ public class ApplicationContextConfig {
         sessionBuilder.setProperty("hibernate.format_sql", "true");
         sessionBuilder.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         //sessionBuilder.setProperty("hibernate.jdbc.use_streams_for_binary","true");
-        sessionBuilder.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        //sessionBuilder.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         sessionBuilder.setProperty("hibernate.enable_lazy_load_no_trans", "true");
         return sessionBuilder.buildSessionFactory();
     }
