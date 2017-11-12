@@ -71,6 +71,8 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         Session session = sessionFactory.getCurrentSession();
         int id = message.getId();
         Message messageOld = (Message) session.load(Message.class,id);
+        log.info("VALUES"+message.getValue());
+
         messageOld.setValue(message.getValue());
         messageOld.setTags(message.getTags());
         //session.update(message);
