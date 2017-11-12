@@ -69,7 +69,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         Message message = crudRequestResponse.getMessage();
         System.out.println(message);
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(message);
+        session.update(message);
         crudRequestResponse.setMessage(message);
         return crudRequestResponse;
     }
