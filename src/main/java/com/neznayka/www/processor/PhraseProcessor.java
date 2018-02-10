@@ -82,6 +82,7 @@ public class PhraseProcessor {
             Object[] keysMap = orderMatchesMap.keySet().toArray();
             int highestKey = (Integer) keysMap[keysMap.length - 1];
             findMessage = orderMatchesMap.get(highestKey);
+            log.info("MAX MATCHES ID: "+highestKey);
         }
 
        log.info(findMessage.toString());
