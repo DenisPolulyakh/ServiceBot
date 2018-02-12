@@ -84,8 +84,10 @@ public class PhraseProcessor {
             findMessage = orderMatchesMap.get(highestKey);
             log.info("MAX MATCHES ID: "+highestKey);
         }
+        log.info("OrderMatches: "+orderMatchesMap);
 
-       log.info(findMessage.toString());
+
+        log.info(findMessage.toString());
 
         return findMessage;
 
