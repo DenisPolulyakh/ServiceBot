@@ -131,18 +131,20 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
 
             Disjunction or = Restrictions.disjunction();
 
+            Junction and = Restrictions.conjunction();
+
             query = sessionFactory.getCurrentSession().createCriteria(Message.class);
             query.createAlias("tags", "tagsJoin");
             //сравниваем каждый тег
             for (String key : keyWords) {
                 if (key.length() > 3) {
-                    or.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
+                    and.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
                 } /*else {
                     or.add(Restrictions.eq("tagsJoin.tag", key));
                 }*/
 
             }
-            query.add(or);
+            query.add(and);
             answers.addAll(query.list());
 
 
