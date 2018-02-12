@@ -135,11 +135,11 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             query.createAlias("tags", "tagsJoin");
             //сравниваем каждый тег
             for (String key : keyWords) {
-               /* if (key.length() > 3) {*/
+                if (key.length() > 3) {
                     or.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
-                //} else {
-               //     or.add(Restrictions.eq("tagsJoin.tag", key));
-              //  }
+                } else {
+                    or.add(Restrictions.eq("tagsJoin.tag", key));
+                }
 
             }
             query.add(or);
