@@ -138,13 +138,13 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             //сравниваем каждый тег
             for (String key : keyWords) {
                 if (key.length() > 3) {
-                    and.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
-                } /*else {
+                    or.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
+                } else {
                     or.add(Restrictions.eq("tagsJoin.tag", key));
-                }*/
+                }
 
             }
-            query.add(and);
+            query.add(or);
             answers.addAll(query.list());
 
 
