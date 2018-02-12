@@ -137,9 +137,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             for (String key : keyWords) {
                 if (key.length() > 3) {
                     or.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
-                } else {
+                } /*else {
                     or.add(Restrictions.eq("tagsJoin.tag", key));
-                }
+                }*/
 
             }
             query.add(or);
