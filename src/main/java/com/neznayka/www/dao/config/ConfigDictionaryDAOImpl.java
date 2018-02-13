@@ -124,7 +124,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             query = sessionFactory.getCurrentSession().
                     createCriteria(Message.class);
             query.createAlias("tags", "tagsJoin");
-            query.add(Restrictions.like(("tagsJoin.tag"), keyAll.trim(), MatchMode.ANYWHERE));
+            query.add(Restrictions.ilike(("tagsJoin.tag"), keyAll.trim().toLowerCase(), MatchMode.ANYWHERE));
             answers.addAll(query.list());
         }
 
@@ -138,9 +138,9 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             //сравниваем каждый тег
             for (String key : keyWords) {
                 if (key.length() > 3) {
-                    or.add(Restrictions.like("tagsJoin.tag", key, MatchMode.ANYWHERE));
+                    or.add(Restrictions.ilike("tagsJoin.tag", key.toLowerCase(), MatchMode.ANYWHERE));
                 } else {
-                    or.add(Restrictions.eq("tagsJoin.tag", key));
+                    or.add(Restrictions.eq("tagsJoin.tag", key.toLowerCase()).ignoreCase());
                 }
 
             }
