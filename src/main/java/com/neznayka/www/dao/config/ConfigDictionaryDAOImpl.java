@@ -138,15 +138,18 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             query.createAlias("tags", "tagsJoin", JoinType.INNER_JOIN);
             //сравниваем каждый тег
             for (String key : keyWords) {
-                if (key.length() > 3) {
+                /*if (key.length() > 3) {
                     or.add(Restrictions.ilike("tagsJoin.tag", key.toLowerCase(), MatchMode.ANYWHERE));
                 } else {
                     or.add(Restrictions.eq("tagsJoin.tag", key.toLowerCase()).ignoreCase());
-                }
+                }*/
+                List<Message> list = select(key.toLowerCase());
+                log.info("SELECT:", list);
 
+                answers.addAll(list);
             }
-            query.add(or);
-            answers.addAll(query.list());
+            /*query.add(or);
+            answers.addAll(query.list());*/
 
 
 
@@ -181,5 +184,14 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         log.info("READ");
         logs.addAll(query.list());
         return logs;
+    }
+
+
+
+    @Transactional
+    public List<Message> select(String k) {
+        String hql = "from Message as m left join Tag as t where lower(m.t) and like k";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        return query.list();
     }
 }
