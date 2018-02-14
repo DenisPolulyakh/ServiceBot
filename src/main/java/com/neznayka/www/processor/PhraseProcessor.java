@@ -70,7 +70,7 @@ public class PhraseProcessor {
                     match++;
                 }
             }
-            if (match > 0) {
+            if (match > 1) {
                 orderMatchesMap.put(match, m);
             }
         }

@@ -146,6 +146,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
                 }*/
                 List<Message> list = select(key.toLowerCase());
                 log.info("SELECT: "+list);
+                //убираем одинаковые message
                 setAnswers.addAll(list);
                 answers.addAll(setAnswers);
             }
