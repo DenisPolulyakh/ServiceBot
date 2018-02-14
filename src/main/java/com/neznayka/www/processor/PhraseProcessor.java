@@ -42,9 +42,9 @@ public class PhraseProcessor {
         if (listMessage != null) {
             if (listMessage.size() > 0 && listMessage.size() < 2) {
                 messageAnswer.setPhrase(listMessage.get(0).getValue());
+            }else {
+                messageAnswer.setPhrase(getOnlyOneMessage(listMessage, text.split(" ")).getValue());
             }
-            messageAnswer.setPhrase(getOnlyOneMessage(listMessage,text.split(" " )).getValue());
-
         }
 
         if(messageAnswer.getPhrase().equalsIgnoreCase(DEFAULT_ANSWER)){
