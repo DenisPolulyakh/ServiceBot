@@ -190,8 +190,10 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
 
     @Transactional
     public List<Message> select(String k) {
-        String hql = "from Message as m left join Tag as t where lower(m.t) and like k";
+        k="%"+k+"%";
+        String hql = "from Message as m left join Tag as t where lower(m.tags) and like :key";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setString("key",k);
         return query.list();
     }
 }
