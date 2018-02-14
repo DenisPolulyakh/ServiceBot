@@ -21,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 
-
-
 @Repository
 public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
     private static final String CLASS_NAME = ConfigDictionaryDAOImpl.class.getName();
@@ -36,12 +34,8 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
     public CRUDRequestResponse create(CRUDRequestResponse crudRequestResponse) {
 
 
-
         Message message = crudRequestResponse.getMessage();
         Session session = sessionFactory.getCurrentSession();
-
-
-
 
 
         session.save(message);
@@ -72,7 +66,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         Session session = sessionFactory.getCurrentSession();
         int id = message.getId();
         //получаем объект по id
-        Message messageUpdate = (Message) session.get(Message.class,id);
+        Message messageUpdate = (Message) session.get(Message.class, id);
         //устанавливаем новые значения
         messageUpdate.setValue(message.getValue());
         messageUpdate.setTags(message.getTags());
@@ -130,32 +124,31 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
         }*/
 
 
-            Disjunction or = Restrictions.disjunction();
+        Disjunction or = Restrictions.disjunction();
 
-            Junction and = Restrictions.conjunction();
+        Junction and = Restrictions.conjunction();
 
-            query = sessionFactory.getCurrentSession().createCriteria(Message.class);
-            query.createAlias("tags", "tagsJoin", JoinType.INNER_JOIN);
-            Set<Message> setAnswers = new HashSet<>();
-            //сравниваем каждый тег
-            for (String key : keyWords) {
+        query = sessionFactory.getCurrentSession().createCriteria(Message.class);
+        query.createAlias("tags", "tagsJoin", JoinType.INNER_JOIN);
+        Set<Message> setAnswers = new HashSet<>();
+        //сравниваем каждый тег
+        for (String key : keyWords) {
                 /*if (key.length() > 3) {
                     or.add(Restrictions.ilike("tagsJoin.tag", key.toLowerCase(), MatchMode.ANYWHERE));
                 } else {
                     or.add(Restrictions.eq("tagsJoin.tag", key.toLowerCase()).ignoreCase());
                 }*/
+            if (key.length() > 3) {
                 List<Message> list = select(key.toLowerCase());
-                log.info("SELECT: "+list);
+                log.info("SELECT: " + list);
                 //убираем одинаковые message
                 setAnswers.addAll(list);
                 answers.addAll(setAnswers);
             }
+        }
 
             /*query.add(or);
             answers.addAll(query.list());*/
-
-
-
 
 
         return answers;
@@ -190,13 +183,12 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
     }
 
 
-
     @Transactional
     public List<Message> select(String k) {
-        k="%"+k+"%";
+        k = "%" + k + "%";
         String hql = "from Message as m left join fetch m.tags as t where lower(t.tag) like :key";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setString("key",k);
+        query.setString("key", k);
         return query.list();
     }
 }
