@@ -136,6 +136,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
 
             query = sessionFactory.getCurrentSession().createCriteria(Message.class);
             query.createAlias("tags", "tagsJoin", JoinType.INNER_JOIN);
+            Set<Message> setAnswers = new HashSet<>();
             //сравниваем каждый тег
             for (String key : keyWords) {
                 /*if (key.length() > 3) {
@@ -145,9 +146,10 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
                 }*/
                 List<Message> list = select(key.toLowerCase());
                 log.info("SELECT: "+list);
-
-                answers.addAll(list);
+                setAnswers.addAll(list);
+                answers.addAll(setAnswers);
             }
+
             /*query.add(or);
             answers.addAll(query.list());*/
 
