@@ -12,6 +12,7 @@ import com.neznayka.www.model.Pager;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -134,7 +135,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             Junction and = Restrictions.conjunction();
 
             query = sessionFactory.getCurrentSession().createCriteria(Message.class);
-            query.createAlias("tags", "tagsJoin");
+            query.createAlias("tags", "tagsJoin", JoinType.INNER_JOIN);
             //сравниваем каждый тег
             for (String key : keyWords) {
                 if (key.length() > 3) {
