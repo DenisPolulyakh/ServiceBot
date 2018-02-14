@@ -144,7 +144,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
                     or.add(Restrictions.eq("tagsJoin.tag", key.toLowerCase()).ignoreCase());
                 }*/
                 List<Message> list = select(key.toLowerCase());
-                log.info("SELECT:", list);
+                log.info("SELECT: "+list);
 
                 answers.addAll(list);
             }
