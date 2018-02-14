@@ -121,13 +121,13 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             keyAll = keyAll + key + " ";
         }
         //ищем фразу полностью
-        if (keyAll.trim().length() > 5) {
+        /*if (keyAll.trim().length() > 5) {
             query = sessionFactory.getCurrentSession().
                     createCriteria(Message.class);
             query.createAlias("tags", "tagsJoin");
             query.add(Restrictions.ilike(("tagsJoin.tag"), keyAll.trim().toLowerCase(), MatchMode.ANYWHERE));
             answers.addAll(query.list());
-        }
+        }*/
 
 
             Disjunction or = Restrictions.disjunction();
@@ -135,7 +135,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             Junction and = Restrictions.conjunction();
 
             query = sessionFactory.getCurrentSession().createCriteria(Message.class);
-            query.createAlias("tags", "tagsJoin", JoinType.INNER_JOIN);
+            query.createAlias("tags", "tagsJoin", JoinType.LEFT_OUTER_JOIN);
             //сравниваем каждый тег
             for (String key : keyWords) {
                 if (key.length() > 3) {
