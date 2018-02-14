@@ -135,7 +135,7 @@ public class ConfigDictionaryDAOImpl implements ConfigDictionaryDAOIntf {
             Junction and = Restrictions.conjunction();
 
             query = sessionFactory.getCurrentSession().createCriteria(Message.class);
-            query.createAlias("tags", "tagsJoin", JoinType.RIGHT_OUTER_JOIN);
+            query.createAlias("tags", "tagsJoin", JoinType.INNER_JOIN);
             //сравниваем каждый тег
             for (String key : keyWords) {
                 if (key.length() > 3) {
