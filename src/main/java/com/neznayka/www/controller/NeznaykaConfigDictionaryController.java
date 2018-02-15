@@ -118,7 +118,7 @@ public class NeznaykaConfigDictionaryController {
         PhraseProcessor phraseProcessor = new PhraseProcessor();
         phraseProcessor.setConfigDAO(configDAO);
         MessageAnswer messageAnswer = phraseProcessor.getMessageToAnswer(text);
-        //loggingService.logMessage(id,text,messageAnswer.getPhrase());
+        loggingService.logMessage(id,text,messageAnswer.getPhrase());
         return  messageAnswer;
 
     }
